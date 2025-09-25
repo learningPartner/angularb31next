@@ -1,0 +1,68 @@
+<div class="parent">
+    <div class="container">
+        <div class="todo-container">
+            <!-- Header -->
+            <div class="text-center mb-4">
+                <h2 class="fw-bold text-primary">✨ My ToDo App</h2>
+                <p class="text-muted">Stay organized. Stay productive.</p>
+            </div>
+
+            <!-- Add Task -->
+            <form class="input-group mb-4 shadow-sm">
+                <input type="text" [(ngModel)]="taskName" name="taskName" class="form-control form-control-lg"
+                    placeholder="Enter new task...">
+                <button (click)="onAddTask()" class="btn btn-primary btn-lg px-4" type="button">
+                    <i class="bi bi-plus-lg"></i> Add
+                </button>
+                <button (click)="onTextChange()" class="btn btn-success btn-lg px-4" type="button">
+                    <i class="bi bi-plus-lg"></i> Search
+                </button>
+            </form>
+
+            <!-- Filter -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">Tasks</h5>
+                <select class="form-select w-auto" (change)="onStatuFilter($event)">
+                    <option selected>All</option>
+                    <option>New</option>
+                    <option>Completed</option>
+                    <option>On Hold</option>
+                </select>
+            </div>
+
+            <!-- Task List -->
+            <ul class="list-group">
+                @if (isFilterRecordPresent()) {
+                @for (item of filteredTaskList(); track $index) {
+                <li class="list-group-item d-flex justify-content-between align-items-center task-item">
+                    <div>
+                        <!-- <select (change)="chnageStatus($event,item)">
+                            <option selected>All</option>
+                            <option>New</option>
+                            <option>Completed</option>
+                            <option>On Hold</option>
+                        </select> -->
+                        <span>{{item.taskName}}</span>
+                    </div>
+                    @if(item.taskStatus == 'New') {
+                        <span class="badge bg-success badge-status">{{item.taskStatus}}</span>
+                    } @else{
+                         <span class="badge bg-primary badge-status">{{item.taskStatus}}</span>
+                    }
+                    
+                </li>
+                }
+                } @else {
+                <li class="list-group-item d-flex justify-content-between align-items-center task-item">
+                    <div>
+                        <span>No Task Found with Search Filter</span>
+                    </div>
+                </li>
+                }
+
+
+
+            </ul>
+        </div>
+    </div>
+</div>

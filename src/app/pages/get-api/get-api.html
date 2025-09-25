@@ -1,0 +1,37 @@
+<button (click)="getAllDepratments()">Get Dept</button>
+
+<select [(ngModel)]="selectedDeptId" (change)="getDesignationByDeptId()">
+    @for (item of deptList; track $index) {
+    <option [value]="item.departmentId"> {{item.departmentName}}</option>
+    }
+</select>
+
+<select name="" id="">
+    @for (item of designationList; track $index) {
+    <option value="">{{item.designationName}}</option>
+    }
+</select>
+<br>
+<table>
+    <thead>
+        <tr>
+            <th>Sr No</th>
+            <th>Name</th>
+            <th>Mobuile</th>
+            <th>Dept</th>
+            <th>Designation</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (item of empList; track $index) {
+        <tr>
+            <td>{{$index+1}}</td>
+            <td>{{item.fullName}}</td>
+            <td>{{item.phone}}</td>
+            <td>{{item.departmentName}}</td>
+            <td>{{item.designationName}}</td>
+        </tr>
+        }
+
+    </tbody>
+</table>
