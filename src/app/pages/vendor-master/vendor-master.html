@@ -24,7 +24,8 @@
                             <td>{{item.emailId}}</td>
                             <td>
                                 <button class="btn btn-success" (click)="onEdit(item)">Edit</button>
-                                <button class="btn btn-danger mx-2" (click)="onDeleteVendor(item.vendorId)">Delete</button>
+                                <button class="btn btn-danger mx-2"
+                                    (click)="onDeleteVendor(item.vendorId)">Delete</button>
                             </td>
                         </tr>
                         }
@@ -39,35 +40,80 @@
                 New Vendor
             </div>
             <div class="card-body">
-                <div class="row">
-                    <div class="col-6">
-                        <label for="">Vendor Name</label>
-                        <input type="text" [(ngModel)]="newVendorObj.vendorName" class="form-control">
-                    </div>
-                    <div class="col-6">
-                        <label for="">Contact No</label>
-                        <input type="text" [(ngModel)]="newVendorObj.contactNo" class="form-control">
-                    </div>
-                    <div class="col-6">
-                        <label for="">Email-Id</label>
-                        <input type="text" [(ngModel)]="newVendorObj.emailId" class="form-control">
-                    </div>
-                </div>
-                --{{newVendorObj|json}}
-                <div class="row pt-3">
-                    <div class="col-6 text-center">
-                        <button class="btn btn-secondary" (click)="onResteForm()">Reset</button>
-                    </div>
-                    <div class="col-6 text-center">
-                        @if(newVendorObj.vendorId == 0) {
-                        <button class="btn btn-primary" (click)="onSaveVendor()">Save vendor</button>
-                        } @else {
-                        <button class="btn btn-warning" (click)="onUpdateVendor()">Update vendor</button>
-                        }
+                <form #formValue="ngForm">
+                    <div class="row">
+                        <div class="col-6">
+                             
+                            <label for="">Vendor Name</label>
+                            <input type="text" #vendorName="ngModel" name="vendorName"
+                                [(ngModel)]="newVendorObj.vendorName" required minlength="4" class="form-control">
+                            <div class="text-danger">
+                                <!-- {{vName.errors | json}} -->
+
+                                <!-- ?.=> optional chaining
+                            null cohacing -->
+                                    
+                                @if(vendorName.errors?.['required'] && (vendorName.touched || vendorName.dirty)) {
+                                <span>This is Required</span>
+                                }
+                                @if(vendorName.errors?.['minlength']) {
+                                <span>Min 4 Char Needed</span>
+                                }
 
 
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label for="">Contact No</label>
+                            <input type="text" #mobile="ngModel" name="contactNo" [(ngModel)]="newVendorObj.contactNo"
+                                pattern="^\d+$" required minlength="10" maxlength="10" class="form-control">
+                            <div class="text-danger">
+                                @if(mobile.touched) {
+                                  @if (mobile.errors?.['required']) {
+                                  <span>This is Mandatory</span>
+                                  } @else if (mobile.errors?.['minlength']) {
+                                  <span>Min 10 Char Needed</span>
+                                  } @else if (mobile.errors?.['maxlength']) {
+                                  <span>Max 10 Char Needed</span>
+                                  } @else if (mobile.errors?.['pattern']) {
+                                  <span>Only No Allowed</span>
+                                  }
+                                }
+
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label for="">Email-Id</label>
+                            <input type="text" #email="ngModel" name="emailId" [(ngModel)]="newVendorObj.emailId"
+                                required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control">
+                            <div class="text-danger">
+                                @if(email.errors?.['required']) {
+                                <span>This is required</span>
+                                }
+                                @if(email.errors?.['pattern']) {
+                                <span>Email NoT Correct</span>
+                                }
+                            </div>
+                        </div>
                     </div>
-                </div>
+                    <div class="row pt-3">
+                        <div class="col-6 text-center">
+                            <button class="btn btn-secondary" (click)="onResteForm()">Reset</button>
+                        </div>
+                        <div class="col-6 text-center">
+                            @if(newVendorObj.vendorId == 0) {
+                            --{{formValue.invalid}}
+                            <button class="btn btn-primary" (click)="onSaveVendor()" [disabled]="formValue.invalid">Save
+                                vendor</button>
+                            } @else {
+                            <button class="btn btn-warning" (click)="onUpdateVendor()">Update vendor</button>
+                            }
+
+
+                        </div>
+                    </div>
+                </form>
+
             </div>
         </div>
     </div>

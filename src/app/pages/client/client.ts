@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-client',
@@ -13,12 +13,12 @@ export class Client implements OnInit {
 
   newClientForm: FormGroup = new FormGroup({
     clientId: new FormControl(0),
-    clientName: new FormControl(""),
+    clientName: new FormControl("",[Validators.required, Validators.minLength(5)]),
     businessName: new FormControl(""),
     contactPerson: new FormControl(""),
     contactNo: new FormControl(""),
     altContactNo: new FormControl(""),
-    email: new FormControl(""),
+    email: new FormControl("",[Validators.required,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]),
     createdDate: new FormControl(new Date()),
     logo: new FormControl("")
   });

@@ -1,7 +1,7 @@
 import { JsonPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-vendor-master',
@@ -22,6 +22,11 @@ export class VendorMaster implements OnInit {
 
   ngOnInit(): void {
     this.getAllvendors();
+  }
+
+  chnageName(form: NgForm) {
+    debugger;
+    form.form.controls['vendorName'].setValue("demo")
   }
 
   getAllvendors() {
