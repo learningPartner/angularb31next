@@ -1,5 +1,6 @@
-import { Component, OnInit, signal, Signal } from '@angular/core';
+import { Component, OnInit, Sanitizer, signal, Signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-todo-app',
@@ -14,7 +15,12 @@ export class TodoApp implements OnInit {
   filteredTaskList = signal<ITask[]>([]);
   taskName: string = "";
   isFilterRecordPresent = signal<boolean>(true);
+  htmlCode = "<script>alert('welcome') </script> <h1>  Hellow </h1>";
+  sanituizeHtml! :SafeHtml;
 
+  constructor(private sanitiz: DomSanitizer) {
+    this.sanituizeHtml =  this.sanitiz.bypassSecurityTrustHtml(this.htmlCode)
+  }
   ngOnInit(): void {
     debugger;
     const localData = localStorage.getItem("taskList");
