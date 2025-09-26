@@ -20,7 +20,7 @@ export class Client implements OnInit {
     altContactNo: new FormControl(""),
     email: new FormControl("",[Validators.required,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]),
     createdDate: new FormControl(new Date()),
-    logo: new FormControl("")
+    logo: new FormControl("") 
   });
   
   clientList: any[] = [];
