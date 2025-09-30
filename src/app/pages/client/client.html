@@ -9,19 +9,30 @@
                 <div class="row">
                     @for (item of clientList; track $index) {
                     <div class="col-4 pt-1">
-                        <div class="card">
+                        <div class="card" style="width:400px">
+                            <img class="card-img-top" [src]="'http://storeapi.gerasim.in/customer/'+item.logo" alt="Card image">
+                            <div class="card-body">
+                                <h4 class="card-title">{{item.clientName}}</h4>
+                                <p class="card-text">{{item.contactPerson}}</p>
+                                  <p>
+                                    <small>{{item.email}}</small>
+                                </p>
+                                <a href="#" class="btn btn-primary">See Profile</a>
+                            </div>
+                        </div>
+                        <!-- <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">{{item.clientName}}</h4>
                                 <p class="card-text">{{item.contactPerson}} -
-                                  
+
                                 </p>
                                 <p>
-                                      <small>{{item.email}}</small>
+                                    <small>{{item.email}}</small>
                                 </p>
                                 <a class="card-link btn btn-primary btn-sm" (click)="onEdit(item)">Edit </a>
                                 <a class="card-link btn btn-danger btn-sm">Remove</a>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     }
                 </div>
@@ -46,18 +57,18 @@
                             <label class="form-label">Client Name</label>
                             <input type="text" formControlName="clientName" class="form-control"
                                 placeholder="Enter client name">
-                                <div class="text-danger">
-                                    @if(newClientForm.controls['clientName'].touched) {
-                                         @if (newClientForm.controls['clientName'].errors?.['required']) {
-                                        <span>This is Required</span>
-                                    }
+                            <div class="text-danger">
+                                @if(newClientForm.controls['clientName'].touched) {
+                                @if (newClientForm.controls['clientName'].errors?.['required']) {
+                                <span>This is Required</span>
+                                }
 
-                                    @if (newClientForm.controls['clientName'].errors?.['minlength']) {
-                                        <span>Min % char Neede</span>
-                                    }
-                                    }
-                                   
-                                </div>
+                                @if (newClientForm.controls['clientName'].errors?.['minlength']) {
+                                <span>Min % char Neede</span>
+                                }
+                                }
+
+                            </div>
                         </div>
                         <div class="col-6 mb-1">
                             <label class="form-label">Business Name</label>
@@ -84,20 +95,21 @@
                             <input type="email" formControlName="email" class="form-control" placeholder="Enter email">
                             <div class="text-danger">
                                 @if (newClientForm.controls['email'].errors?.['required']) {
-                                    <span>This is Required</span>
+                                <span>This is Required</span>
                                 }
                                 @if(newClientForm.controls['email'].errors?.['pattern']){
-                                    <span>Email Id Not Ciorrect</span>
+                                <span>Email Id Not Ciorrect</span>
                                 }
                             </div>
                         </div>
                         <div class="col-6 mb-1">
                             <label class="form-label">Logo</label>
-                            <input type="text" formControlName="logo" class="form-control">
+                            <input type="file" (change)="onFileChange($event)" class="form-control">
                         </div>
                     </div>
                     <div class="text-end mt-3">
-                        <button type="button" (click)="onSaveClient()" [disabled]="newClientForm.invalid" class="btn btn-success">Save</button>
+                        <button type="button" (click)="onSaveClient()" [disabled]="newClientForm.invalid"
+                            class="btn btn-success">Save</button>
                         <button type="reset" class="btn btn-secondary">Clear</button>
                     </div>
                 </form>

@@ -1,0 +1,50 @@
+<div class="row text-center pb-3">
+    @for (item of planList; track $index) {
+    <div class="col-4">
+        <div>
+            <i class="fonticon fa fa-mobile" aria-hidden="true"></i><br>
+            {{item.planName}}
+        </div>
+        <button (click)="onPlanSeldction(item.planName)" class="btn btn-sm btn-primary mt-4 btnfont" id="btnMobile">Find
+            More</button>
+    </div>
+    }
+    <div class="col-4">
+        <div>
+            <i class="fonticon fa fa-home" aria-hidden="true"></i><br>
+            JioFiber
+        </div>
+        <button (click)="onPlanSeldction('JioFibre')" class="btn btn-sm btn-primary mt-4 btnfont" id="btnFiber">Find
+            More</button>
+    </div>
+    <div class="col-4">
+        <div>
+            <i class="fonticon fa fa-id-badge" aria-hidden="true"></i><br>
+            Business
+        </div>
+        <button class="btn btn-sm btn-primary mt-4 btnfont btn-success" id="btnBusiness">Find
+            More</button>
+    </div>
+</div>
+<div class="row pt-2">
+    <div class="col-12">
+        <div class="text-center" id="divBusiness" style="">
+            <p>{{selectPlanObj.detauikl}}</p>
+        </div>
+        @if(SelectedPlan == 'Mobile') {
+        <div class="text-center" id="divMobile" style="display: none;">
+            <p>Free SIM, calls, and SMS with invaluable digital experiences.</p>
+            <p>2000/month</p>
+        </div>
+        } @else if (SelectedPlan == 'JioFibre') {
+        <div class="text-center" id="divFiber" style="display: none;">
+            <p> Connected living experiences with superfast home internet.</p>
+            <p>1500/month</p>
+        </div>
+
+        }
+
+
+
+    </div>
+</div>

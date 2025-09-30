@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Master } from '../../services/master';
 
 @Component({
   selector: 'app-client',
@@ -26,8 +27,14 @@ export class Client implements OnInit {
   clientList: any[] = [];
   http = inject(HttpClient);
 
+  masterService = inject(Master);
+
   ngOnInit(): void {
-    this.getAllClinets();
+    this.getAllClinetData();
+    debugger;
+    const fullName =  this.masterService.generateFullName('Chetan', 'p', 'Jogi');
+
+    const apiVerison =  this.masterService.apiVersionName;
   }
 
   onEdit(data: any) {
@@ -55,6 +62,18 @@ export class Client implements OnInit {
     })
   }
 
+  getAllClinetData() {
+    debugger;
+    this.masterService.getAllClinet().subscribe({
+      next:(result:any)=>{
+debugger;
+      },
+      error:(error)=>{
+
+      }
+    })
+  }
+
   onSaveClientOld() {
     debugger;
     const formValue = this.newClientForm.value;
@@ -69,10 +88,28 @@ export class Client implements OnInit {
       debugger;
     })
   }
-  onSaveClient() {
+  // onSaveClient() {
+  //   const formValue = this.newClientForm.value;
+  //   this.http.post("https://api.freeprojectapi.com/api/SmartParking/AddClient", formValue).subscribe({
+  //     next: (result: any) => {
+  //       if (result.result == true) {
+  //         alert("Client Created Success")
+  //       } else {
+  //         alert(result.message)
+  //       }
+  //     },
+  //     error: (error) => {
+  //       alert("API Errpor")
+  //     }
+  //   })
+  // }
+
+    onSaveClient() {
+      debugger;
     const formValue = this.newClientForm.value;
-    this.http.post("https://api.freeprojectapi.com/api/SmartParking/AddClient", formValue).subscribe({
+    this.masterService.onSaveClient(formValue).subscribe({
       next: (result: any) => {
+        debugger;
         if (result.result == true) {
           alert("Client Created Success")
         } else {
@@ -82,6 +119,18 @@ export class Client implements OnInit {
       error: (error) => {
         alert("API Errpor")
       }
+    })
+  }
+
+   onFileChange(event:any) {
+    debugger;
+    const file =  event.target.files[0];
+    const formData = new FormData();
+    formData.append("file",file);
+
+    this.http.post("https://storeapi.gerasim.in/api/Customer/Upload",formData).subscribe((Res:any)=>{
+      debugger;
+      this.newClientForm.controls['logo'].setValue(Res)
     })
   }
 

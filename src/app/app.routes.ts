@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { VendorMaster } from './pages/vendor-master/vendor-master';
 import { Client } from './pages/client/client';
 import { TodoApp } from './pages/todo-app/todo-app';
+import { Employee } from './pages/employee/employee';
 
 export const routes: Routes = [
 
@@ -16,6 +17,10 @@ export const routes: Routes = [
     {
         path:'todo',
         component: TodoApp
+    },
+    {
+        path:'employee',
+        component: Employee
     }
 
 ];

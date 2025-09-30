@@ -2,6 +2,8 @@ import { JsonPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
+import { Master } from '../../services/master';
+import { INewVendor, NewVendor } from '../../model/vendor';
 
 @Component({
   selector: 'app-vendor-master',
@@ -11,18 +13,42 @@ import { FormsModule, NgForm } from '@angular/forms';
 })
 export class VendorMaster implements OnInit {
 
-  newVendorObj: any = {
-    "vendorId": 0,
-    "vendorName": "",
-    "contactNo": "",
-    "emailId": ""
+  // newVendorObj: any = {
+  //   "vendorId": 0,
+  //   "vendorName": "",
+  //   "contactNo": "",
+  //   "emailId": ""
+  // };
+
+  newVendorObj : NewVendor = new NewVendor();
+
+  vendorObj: INewVendor =   {
+    contactNo:'',
+    emailId:'',
+    vendorId: 0,
+    vendorName: ''
   };
-  vendorList: any[] = [];
+
+  vendorList: unknown[] = [];
   http = inject(HttpClient);
+  masterService = inject(Master);
+  //vendorName: never = '';
 
   ngOnInit(): void {
     this.getAllvendors();
+    this.getAllClient()
   }
+
+  getAllClient() {
+     debugger;
+    this.masterService.getAllClinet().subscribe({
+      next:(res:any)=> {
+        debugger;
+      }
+    })
+  }
+
+   
 
   chnageName(form: NgForm) {
     debugger;
@@ -37,6 +63,9 @@ export class VendorMaster implements OnInit {
 
   onSaveVendor() {
     debugger;
+    this.masterService.saveVendor(this.newVendorObj).subscribe((res:any)=>{
+
+    });
     this.http.post("https://api.freeprojectapi.com/api/BusBooking/PostBusVendor", this.newVendorObj).subscribe((res: any) => {
       debugger;
       alert("Vendor Created Success");
