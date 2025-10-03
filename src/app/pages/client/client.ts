@@ -2,15 +2,22 @@ import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Master } from '../../services/master';
+import { AlertBox } from "../../reusabeeComp/alert-box/alert-box";
+import { Tabs } from "../../reusabeeComp/tabs/tabs";
+import { ShowMoreShowLess } from "../../reusabeeComp/show-more-show-less/show-more-show-less";
 
 @Component({
   selector: 'app-client',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, AlertBox, Tabs, ShowMoreShowLess],
   templateUrl: './client.html',
   styleUrl: './client.css'
 })
 export class Client implements OnInit {
 
+  tabListData = ['Product Basic','Discounts','Delivery Codes','Images','Reviews']
+
+ 
+  completeText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et dictum interdum, nisi lorem egestas vitae sce lerisque enim ligula venenatis dolor. Maecenas nisl est, ultrices nec congue eget, auctor vitae massa. Fusce luctus vestibulum augue ut aliquet. Nunc sagittis dictum nisi, sed ullamcorper ipsum dignissim ac. In at libero sed nunc venenatis imperdiet sed ornare turpis. Donec vitae dui eget tellus gravida venenatis. Integer fringilla congue eros non fermentum. Sed dapibus pulvinar nibh tempor porta.'
 
   newClientForm: FormGroup = new FormGroup({
     clientId: new FormControl(0),

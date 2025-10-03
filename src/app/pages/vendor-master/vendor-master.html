@@ -1,10 +1,46 @@
+<app-alert-box [alertType]="title" alertMessage="This is Vendor Page"> </app-alert-box>
 <div class="row">
-    <div class="col-8">
+    <div class="col-12">
+        <app-tabs (onTabChange)="getSelectedTabName($event)" [selectedTabName]="selectedTabName"
+            [tabList]="['Vendor List','New Vendor Form']"></app-tabs>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-4">
+        <app-show-more-show-less  [textMessage]="'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et dictum interdum, nisi lorem egestas vitae scelerisque enim ligula venenatis dolor. Maecenas nisl est, ultrices nec congue eget, auctor vitae massa. Fusce luctus vestibulum augue ut aliquet. Nunc sagittis dictum nisi, sed ullamcorper ipsum dignissim ac. In at libero sed nunc venenatis imperdiet sed ornare turpis. Donec vitae dui eget tellus gravida venenatis. Integer fringilla congue eros non fermentum. Sed dapibus pulvinar nibh tempor porta.'"></app-show-more-show-less>
+    </div>
+</div>
+<!-- <div class="row">
+    <div class="col-12">
+        @if (selectedTabName == 'Basic Info') {
+            Baic details form
+        }
+         @if (selectedTabName == 'Family Details') {
+            Family List
+        }
+         @if (selectedTabName == 'Projects') {
+            Projects word kon 
+        }
+         @if (selectedTabName == 'Skills') {
+            Skill List
+        }
+    </div>
+</div> -->
+
+<div class="row">
+    @if(selectedTabName == 'Vendor List') {
+    <div class="col-12">
         <div class="card">
             <div class="card-header bg-warning">
                 Vendor List
             </div>
             <div class="card-body">
+
+                city=> {{studentObj.city}} -email=> {{studentObj?.contact?.email}};
+
+                <br>
+
                 <table class="table table-bordered">
                     <thead>
                         <tr>
@@ -34,7 +70,8 @@
             </div>
         </div>
     </div>
-    <div class="col-4">
+    } @else {
+    <div class="col-12">
         <div class="card">
             <div class="card-header bg-warning">
                 New Vendor
@@ -43,7 +80,7 @@
                 <form #formValue="ngForm">
                     <div class="row">
                         <div class="col-6">
-                             
+
                             <label for="">Vendor Name</label>
                             <input type="text" #vendorName="ngModel" name="vendorName"
                                 [(ngModel)]="newVendorObj.vendorName" required minlength="4" class="form-control">
@@ -52,7 +89,7 @@
 
                                 <!-- ?.=> optional chaining
                             null cohacing -->
-                                    
+
                                 @if(vendorName.errors?.['required'] && (vendorName.touched || vendorName.dirty)) {
                                 <span>This is Required</span>
                                 }
@@ -69,15 +106,15 @@
                                 pattern="^\d+$" required minlength="10" maxlength="10" class="form-control">
                             <div class="text-danger">
                                 @if(mobile.touched) {
-                                  @if (mobile.errors?.['required']) {
-                                  <span>This is Mandatory</span>
-                                  } @else if (mobile.errors?.['minlength']) {
-                                  <span>Min 10 Char Needed</span>
-                                  } @else if (mobile.errors?.['maxlength']) {
-                                  <span>Max 10 Char Needed</span>
-                                  } @else if (mobile.errors?.['pattern']) {
-                                  <span>Only No Allowed</span>
-                                  }
+                                @if (mobile.errors?.['required']) {
+                                <span>This is Mandatory</span>
+                                } @else if (mobile.errors?.['minlength']) {
+                                <span>Min 10 Char Needed</span>
+                                } @else if (mobile.errors?.['maxlength']) {
+                                <span>Max 10 Char Needed</span>
+                                } @else if (mobile.errors?.['pattern']) {
+                                <span>Only No Allowed</span>
+                                }
                                 }
 
                             </div>
@@ -102,11 +139,14 @@
                         </div>
                         <div class="col-6 text-center">
                             @if(newVendorObj.vendorId == 0) {
-                            --{{formValue.invalid}}
-                            <button class="btn btn-primary" (click)="onSaveVendor()" [disabled]="formValue.invalid">Save
-                                vendor</button>
+                            <app-my-button [btnTitle]="'Save Vendor'"  (onBtnClick)="onSaveVendor()"
+                            [btnType]="'button'" [btnClass]="'btn btn-secondary'"></app-my-button>
+                            <!-- <button class="btn btn-primary" (click)="onSaveVendor()" [disabled]="formValue.invalid">Save
+                                vendor</button> -->
                             } @else {
-                            <button class="btn btn-warning" (click)="onUpdateVendor()">Update vendor</button>
+                                <app-my-button [btnTitle]="'Update Vendor'"  [btnType]="'button'" [btnClass]="'btn btn-warning'"
+                                (onBtnClick)="onUpdateVendor()" > </app-my-button>
+                             <!-- <button class="btn btn-warning" (click)="onUpdateVendor()">Update vendor</button> -->
                             }
 
 
@@ -117,4 +157,7 @@
             </div>
         </div>
     </div>
+    }
+
+
 </div>

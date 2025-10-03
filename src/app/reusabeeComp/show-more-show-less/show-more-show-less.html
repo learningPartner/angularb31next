@@ -1,0 +1,11 @@
+@if (charCount ==0 || isShowMore == true) {
+    {{textMessage}}
+} @else {
+    {{textMessage |slice:0:charCount}}
+
+}
+
+
+@if (charCount !==0) {
+<button (click)="isShowMore = !isShowMore" id="myBtn">Read more</button>
+}

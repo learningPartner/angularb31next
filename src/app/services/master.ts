@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { NewVendor } from '../model/vendor';
+import { LoginModel } from '../model/client.model';
 
 @Injectable({
   providedIn: 'root'
@@ -35,5 +36,10 @@ export class Master {
 
   saveVendor(obj: NewVendor) {
     return this.http.post("",obj)
+  }
+
+  login(obj: LoginModel) {
+     debugger;
+    return this.http.post("https://api.freeprojectapi.com/api/ProjectCompetition/login",obj)
   }
 }

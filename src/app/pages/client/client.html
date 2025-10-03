@@ -1,3 +1,13 @@
+<app-alert-box [alertType]="'Success'" 
+[alertMessage]="'Welcome tio Clinet Page'"></app-alert-box>
+
+<app-tabs [tabList]="tabListData"></app-tabs>
+
+<div class="row">
+    <div class="col-3">
+        <app-show-more-show-less [charCount]="30"  [textMessage]="completeText"></app-show-more-show-less>
+    </div>
+</div>
 <div class="row">
     <!-- Client List -->
     <div class="col-md-8">
@@ -111,6 +121,7 @@
                         <button type="button" (click)="onSaveClient()" [disabled]="newClientForm.invalid"
                             class="btn btn-success">Save</button>
                         <button type="reset" class="btn btn-secondary">Clear</button>
+                       
                     </div>
                 </form>
             </div>

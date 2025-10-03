@@ -4,10 +4,14 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Master } from '../../services/master';
 import { INewVendor, NewVendor } from '../../model/vendor';
+import { AlertBox } from "../../reusabeeComp/alert-box/alert-box";
+import { Tabs } from "../../reusabeeComp/tabs/tabs";
+import { ShowMoreShowLess } from "../../reusabeeComp/show-more-show-less/show-more-show-less";
+import { MyButton } from "../../reusabeeComp/my-button/my-button";
 
 @Component({
   selector: 'app-vendor-master',
-  imports: [FormsModule, JsonPipe],
+  imports: [FormsModule, JsonPipe, AlertBox, Tabs, ShowMoreShowLess, MyButton],
   templateUrl: './vendor-master.html',
   styleUrl: './vendor-master.css'
 })
@@ -19,24 +23,32 @@ export class VendorMaster implements OnInit {
   //   "contactNo": "",
   //   "emailId": ""
   // };
+  title = "Warning"
 
   newVendorObj : NewVendor = new NewVendor();
 
-  vendorObj: INewVendor =   {
-    contactNo:'',
-    emailId:'',
-    vendorId: 0,
-    vendorName: ''
-  };
+  vendorObj!: INewVendor;
 
-  vendorList: unknown[] = [];
+  studentObj: any = {
+    name:'ABC',
+     
+    skills: ['Angular','Css','Html']
+  }
+
+  vendorList: NewVendor[] = [];
   http = inject(HttpClient);
   masterService = inject(Master);
   //vendorName: never = '';
+  selectedTabName: string = 'Vendor List';
 
   ngOnInit(): void {
     this.getAllvendors();
     this.getAllClient()
+  }
+
+  getSelectedTabName(tabNAme: string) {
+    debugger;
+    this.selectedTabName =  tabNAme;
   }
 
   getAllClient() {
@@ -63,9 +75,9 @@ export class VendorMaster implements OnInit {
 
   onSaveVendor() {
     debugger;
-    this.masterService.saveVendor(this.newVendorObj).subscribe((res:any)=>{
+    // this.masterService.saveVendor(this.newVendorObj).subscribe((res:any)=>{
 
-    });
+    // });
     this.http.post("https://api.freeprojectapi.com/api/BusBooking/PostBusVendor", this.newVendorObj).subscribe((res: any) => {
       debugger;
       alert("Vendor Created Success");
@@ -75,6 +87,7 @@ export class VendorMaster implements OnInit {
 
   onEdit(data: any) {
     this.newVendorObj = data;
+    this.selectedTabName = 'New Vendor Form'
   }
 
   onUpdateVendor() {
