@@ -11,4 +11,10 @@ export class AlertBox {
   @Input() alertType = "";
   @Input() alertMessage = "";
 
+  localTextTile: string = "New Text";
+
+  getValue() {
+    
+  }
+
 }

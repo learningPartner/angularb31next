@@ -6,6 +6,8 @@ import { Employee } from './pages/employee/employee';
 import { Login } from './pages/login/login';
 import { Header } from './pages/header/header';
 import { authGuard } from './guard/auth-guard';
+import { Signal } from './pages/signal/signal';
+import { Viewchild } from './pages/viewchild/viewchild';
 
 export const routes: Routes = [
 
@@ -38,6 +40,14 @@ export const routes: Routes = [
             {
                 path: 'employee',
                 component: Employee
+            },
+            {
+                path: 'signal',
+                component: Signal
+            },
+            {
+                path: 'viewchild',
+                component: Viewchild
             }
         ]
     }

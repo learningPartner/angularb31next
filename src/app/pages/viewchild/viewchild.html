@@ -1,0 +1,19 @@
+<div class="row">
+    <div class="col-3">
+        <input type="text" value="224455" #txtRoll placeholder="Roll No">
+    </div>
+    <div class="col-3">
+         <button (click)="readText()">Read Value</button>
+    </div>
+     <div class="col-3">
+         <button (click)="setRollText()">set Value</button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-3">
+        <app-alert-box [alertMessage]="'text'" [alertType]="'Success'"></app-alert-box>
+    </div>
+    <div class="col-2">
+        <button (click)="ReadAlertData()">Read Text</button>
+    </div>
+</div>
