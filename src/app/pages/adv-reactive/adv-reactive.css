@@ -1,0 +1,3 @@
+ .invalid-feedback { display: none; }
+    .was-validated .form-control:invalid ~ .invalid-feedback { display: block; }
+    .address-card { margin-bottom: .75rem; }

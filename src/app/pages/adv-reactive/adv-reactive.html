@@ -1,0 +1,136 @@
+<div class="container">
+    <h2 class="mb-3">Reactive Form Practice (HTML + JS)</h2>
+    <p class="text-muted">Practice dynamic validation, enable/disable, control changes and nested forms.</p>
+    <button class="btn btn-primary" (click)="onEdit()"> Edit</button>
+    <form [formGroup]="userForm" id="mainForm" class="needs-validation" novalidate>
+      <div class="row g-3">
+        <!-- Basic info -->
+        <div class="col-md-6">
+          <label for="fullName" class="form-label">Full name</label>
+          <input type="text"  class="form-control" id="fullName" name="fullName" >
+          <div class="invalid-feedback">Full name is required.</div>
+        </div>
+
+        <div class="col-md-3">
+          <label for="age" class="form-label">Age</label>
+          <input type="number"   class="form-control" id="age" name="age" >
+          <div class="invalid-feedback">Provide a valid age.</div>
+        </div>
+
+        <div class="col-md-3">
+          <label for="isEmployed" class="form-label d-block">Employment</label>
+          <div class="form-check form-switch">
+            <input formControlName="isEmployeed"class="form-check-input" type="checkbox">
+            <label class="form-check-label" for="isEmployed">Is Employed?</label>
+          </div>
+          <div class="form-text">Toggle to enable salary & company fields.</div>
+        </div>
+
+        <!-- Employment fields that will be enabled/disabled -->
+        <div class="col-md-6">
+          <label for="company" class="form-label">Company</label>
+          <input formControlName="companyName" type="text" class="form-control" id="company" name="company" >
+          <div class="invalid-feedback">Company is required when employed.</div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="salary" class="form-label">Salary (INR)</label>
+          <input formControlName="salary" type="number"   class="form-control" id="salary" name="salary" >
+          <div class="invalid-feedback">Salary is required when employed and must be &gt; 0.</div>
+        </div>
+
+        <!-- Account type demonstrates dynamic validator changes -->
+        <div class="col-md-6">
+          <label for="accountType" class="form-label">Account Type</label>
+          <select id="accountType" formControlName="accountType"  class="form-select" name="accountType" required>
+            <option value="">Choose...</option>
+            <option value="basic">Basic</option>
+            <option value="business">Business</option>
+            <option value="student">Student</option>
+          </select>
+          <div class="invalid-feedback">Choose an account type.</div>
+        </div>
+
+        <!-- Business account requires GST number (dynamic validator) -->
+        <div class="col-md-6">
+          <label for="gst" class="form-label">GST Number (Required for Business)</label>
+          <input type="text" formControlName="gstNo" class="form-control" id="gst" name="gst" placeholder="e.g. 22AAAAA0000A1Z5">
+          --{{userForm.controls['gstNo'].errors| json}}
+            @if (userForm.controls['gstNo'].errors?.['required']) {
+              <div class="text-error" id="gstFeedback">Valid GST required for business accounts.</div>
+            }
+          
+        </div>
+
+        <!-- Country / State demonstrates form control change -->
+        <div class="col-md-4">
+          <label for="country" class="form-label">Country</label>
+          <select id="country" formControlName="county" class="form-select" name="country" >
+            <option value="">Select...</option>
+            <option value="IN">India</option>
+            <option value="US">United States</option>
+            <option value="OTHER">Other</option>
+          </select>
+          <div class="invalid-feedback">Choose a country.</div>
+        </div>
+        @if(userForm.controls['county'].value == 'OTHER') {
+          <div class="col-md-4">
+          <label for="state" class="form-label">Other County</label>
+          <input type="text" class="form-control" id="state" name="state" placeholder="State or Region">
+          <div class="invalid-feedback" id="stateFeedback">State is required for India and US.</div>
+        </div>
+        }
+         
+        
+         <div class="col-md-4">
+          <label for="country" class="form-label">State</label>
+          <select id="country" formControlName="state" class="form-select" name="country" >
+            <option value="">Select...</option>
+            <option value="Maha">Maharashtra</option>
+            <option value="Punjab">Punjab</option>
+            <option value="Goa">Goa</option>
+          </select>
+          <div class="invalid-feedback">Choose a country.</div>
+        </div>
+
+       
+      </div>
+
+      <hr class="my-4">
+
+      <!-- Nested form: Addresses (array of nested groups) -->
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <h5 class="mb-0">Addresses (Nested Form)</h5>
+        <div>
+          <button type="button" id="addAddressBtn" class="btn btn-sm btn-success">+ Add address</button>
+        </div>
+      </div>
+
+      <div id="addressesContainer">
+         <div class="row">
+            <div class="col-4">
+                <label for="">City</label>
+                <input type="text" class="form-control" >
+            </div>
+             <div class="col-4">
+                <label for="">state</label>
+                <input type="text" class="form-control" >
+            </div>
+             <div class="col-4">
+                <label for="">pincode</label>
+                <input type="text" class="form-control" >
+            </div>
+         </div>
+      </div>
+
+      <hr class="my-4">
+
+      <div class="d-flex gap-2">
+        <button class="btn btn-primary" id="submitBtn" type="submit">Submit</button>
+        <button class="btn btn-secondary" id="resetBtn" type="button">Reset</button>
+      </div>
+    </form>
+
+    <!-- Output area for demonstration -->
+    <pre id="output" class="mt-4 p-3 bg-white border rounded" style="white-space:pre-wrap;"></pre>
+  </div>

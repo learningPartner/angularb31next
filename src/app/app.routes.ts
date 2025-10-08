@@ -8,6 +8,7 @@ import { Header } from './pages/header/header';
 import { authGuard } from './guard/auth-guard';
 import { Signal } from './pages/signal/signal';
 import { Viewchild } from './pages/viewchild/viewchild';
+import { AdvReactive } from './pages/adv-reactive/adv-reactive';
 
 export const routes: Routes = [
 
@@ -28,6 +29,10 @@ export const routes: Routes = [
             {
                 path: 'vendor',
                 component: VendorMaster
+            },
+             {
+                path: 'adv-rec',
+                component: AdvReactive
             },
             {
                 path: 'client',
