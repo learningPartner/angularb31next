@@ -7,10 +7,10 @@ export interface ClientList {
 }
 
 export class LoginModel {
-  email: string;
+  emailId: string;
   password: string;
   constructor() {
-    this.email = "";
+    this.emailId = "";
     this.password = ""
   }
 }

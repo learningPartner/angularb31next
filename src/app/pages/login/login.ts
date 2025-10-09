@@ -21,7 +21,8 @@ export class Login {
     this.masterSrv.login(this.loginObj).subscribe({
       next:(res:any)=>{
          debugger;
-         localStorage.setItem('loginUser',JSON.stringify(res));
+         localStorage.setItem('token', res.data.token)
+         //localStorage.setItem('loginUser',JSON.stringify(res));
          this.router.navigateByUrl("client");
       },
       error:(error:any)=>{

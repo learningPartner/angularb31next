@@ -37,11 +37,23 @@ export class Client implements OnInit {
   masterService = inject(Master);
 
   ngOnInit(): void {
-    this.getAllClinetData();
+    this.getAllUser();
+   // this.getAllClinetData();
     debugger;
     const fullName =  this.masterService.generateFullName('Chetan', 'p', 'Jogi');
 
     const apiVerison =  this.masterService.apiVersionName;
+  }
+
+  getAllUser( ){
+    this.http.get("https://freeapi.miniprojectideas.com/api/User/GetAllUsers").subscribe({
+      next:(res)=>{
+        debugger;
+      },
+      error:(error)=>{
+ debugger;
+      }
+    })
   }
 
   onEdit(data: any) {

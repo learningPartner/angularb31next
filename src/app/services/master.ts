@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { NewVendor } from '../model/vendor';
 import { LoginModel } from '../model/client.model';
@@ -40,6 +40,11 @@ export class Master {
 
   login(obj: LoginModel) {
      debugger;
-    return this.http.post("https://api.freeprojectapi.com/api/ProjectCompetition/login",obj)
+       const tokenData = localStorage.getItem("token")
+      const headers = new HttpHeaders({
+      'Authorization': `Bearer ${tokenData}`  
+    });
+
+    return this.http.post("https://freeapi.miniprojectideas.com/api/User/Login",obj,{headers})
   }
 }
