@@ -8,10 +8,14 @@ import { AlertBox } from "../../reusabeeComp/alert-box/alert-box";
 import { Tabs } from "../../reusabeeComp/tabs/tabs";
 import { ShowMoreShowLess } from "../../reusabeeComp/show-more-show-less/show-more-show-less";
 import { MyButton } from "../../reusabeeComp/my-button/my-button";
+import { NullBlankPipe } from '../../pipe/null-blank-pipe';
+import { Highlight } from '../../directives/highlight';
+import { CheckEmpty } from '../../directives/check-empty';
+import { DisbaleForGuest } from '../../directives/disbale-for-guest';
 
 @Component({
   selector: 'app-vendor-master',
-  imports: [FormsModule, JsonPipe, AlertBox, Tabs, ShowMoreShowLess, MyButton],
+  imports: [FormsModule, JsonPipe, AlertBox, Tabs, ShowMoreShowLess,DisbaleForGuest, MyButton,NullBlankPipe,Highlight,CheckEmpty],
   templateUrl: './vendor-master.html',
   styleUrl: './vendor-master.css'
 })
@@ -60,7 +64,17 @@ export class VendorMaster implements OnInit {
     })
   }
 
-   
+  counter = 0;
+  checkForNullorEmpty(value: any) {
+    this.counter++;
+    console.log("checkForNullorEmpty")
+    console.log( this.counter)
+    if(value == '' || value == null || value == undefined ) {
+      return  "--";
+    } else {
+      return value;
+    } 
+  }
 
   chnageName(form: NgForm) {
     debugger;
@@ -69,7 +83,9 @@ export class VendorMaster implements OnInit {
 
   getAllvendors() {
     this.http.get("https://api.freeprojectapi.com/api/BusBooking/GetBusVendors").subscribe((Res: any) => {
-      this.vendorList = Res;
+      debugger;
+       this.vendorList = Res;
+      //this.vendorList = Res.filter((m:any) => m.vendorName !== 'string' && m.contactNo != "string" && m.emailId !="string");
     })
   }
 
