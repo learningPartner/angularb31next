@@ -9,6 +9,7 @@ import { authGuard } from './guard/auth-guard';
 import { Signal } from './pages/signal/signal';
 import { Viewchild } from './pages/viewchild/viewchild';
 import { AdvReactive } from './pages/adv-reactive/adv-reactive';
+import { Rxjs } from './pages/rxjs/rxjs';
 
 export const routes: Routes = [
 
@@ -41,6 +42,10 @@ export const routes: Routes = [
             {
                 path: 'todo',
                 component: TodoApp
+            },
+            {
+                path: 'rxjs',
+                component: Rxjs
             },
             {
                 path: 'employee',
