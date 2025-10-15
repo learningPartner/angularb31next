@@ -53,7 +53,7 @@ export class Signal {
     // oldList.push(this.cityName);
     // this.cityList.set(oldList);
     const isCityExist =  this.cityList().filter(m=> m == this.cityName);
-    debugger;
+    
     if(isCityExist.length  == 0) {
        this.cityList.update(oldList => ([...oldList,this.cityName]));
     } 

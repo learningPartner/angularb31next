@@ -3,7 +3,7 @@ import { inject } from '@angular/core';
 import { Master } from '../services/master';
 
 export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
-  debugger;
+  
   const tokenData = localStorage.getItem("token");
   const master =  inject(Master);
   const newCloneRequest = req.clone({

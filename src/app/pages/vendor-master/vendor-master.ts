@@ -44,22 +44,33 @@ export class VendorMaster implements OnInit {
   masterService = inject(Master);
   //vendorName: never = '';
   selectedTabName: string = 'Vendor List';
+  curretTime: string = '';
+  curretDate: string = '';
 
+  isAlertCompVisiable: boolean = false;
   ngOnInit(): void {
     this.getAllvendors();
     this.getAllClient()
+    this.masterService.$currentTimeSubject.subscribe((time: string)=>{
+      debugger;
+      this.curretTime =  time;
+    })
+    this.masterService.$curretDateBehaviourSub.subscribe((res:any)=>{
+      debugger;
+      this.curretDate =  res;
+    })
   }
 
   getSelectedTabName(tabNAme: string) {
-    debugger;
+    
     this.selectedTabName =  tabNAme;
   }
 
   getAllClient() {
-     debugger;
+     
     this.masterService.getAllClinet().subscribe({
       next:(res:any)=> {
-        debugger;
+        
       }
     })
   }
@@ -77,25 +88,25 @@ export class VendorMaster implements OnInit {
   }
 
   chnageName(form: NgForm) {
-    debugger;
+    
     form.form.controls['vendorName'].setValue("demo")
   }
 
   getAllvendors() {
     this.http.get("https://api.freeprojectapi.com/api/BusBooking/GetBusVendors").subscribe((Res: any) => {
-      debugger;
+      
        this.vendorList = Res;
       //this.vendorList = Res.filter((m:any) => m.vendorName !== 'string' && m.contactNo != "string" && m.emailId !="string");
     })
   }
 
   onSaveVendor() {
-    debugger;
+    
     // this.masterService.saveVendor(this.newVendorObj).subscribe((res:any)=>{
 
     // });
     this.http.post("https://api.freeprojectapi.com/api/BusBooking/PostBusVendor", this.newVendorObj).subscribe((res: any) => {
-      debugger;
+      
       alert("Vendor Created Success");
       this.getAllvendors();
     })
@@ -115,7 +126,7 @@ export class VendorMaster implements OnInit {
 
   onDeleteVendor(id: number) {
     const isDelete = confirm("Are you sure want to Delete");
-    debugger;
+    
     if (isDelete) {
       this.http.delete("https://api.freeprojectapi.com/api/BusBooking/DeleteBusVendor?id=" + id).subscribe((res: any) => {
         alert("Vendor Deleted");

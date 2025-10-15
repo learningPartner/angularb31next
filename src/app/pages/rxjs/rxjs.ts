@@ -38,35 +38,35 @@ export class Rxjs {
     this.coursername = "Java";
     //write
     // this.timer$.subscribe((res)=>{
-    //   debugger;
+    //   
     // })
     // setInterval(() => {
     //   console.log("Interval")
     // }, 2000);
     this.$firstName.subscribe(result=>{
-      //debugger;
+      //
     })
     this.cityList$.subscribe((cityData)=>{
-      //debugger;
+      //
     })
     this.stateList$.subscribe((state)=>{
-      //debugger;
+      //
     })
     this.studentObj$.subscribe((Stude)=>{
-      //debugger;
+      //
     });
 
    
     this.currentTime.subscribe((res)=>{
-      debugger;
+      
     })
     this.currentDate$.subscribe((Res)=>{
-      debugger;
+      
     })
 
     const newOb =  this.currentDate$.asObservable();
     newOb.subscribe((result)=>{
-      debugger;
+      
     })
     this.currentDate$.next("asdasd")
 

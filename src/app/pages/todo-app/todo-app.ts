@@ -22,7 +22,7 @@ export class TodoApp implements OnInit {
     this.sanituizeHtml =  this.sanitiz.bypassSecurityTrustHtml(this.htmlCode)
   }
   ngOnInit(): void {
-    debugger;
+    
     const localData = localStorage.getItem("taskList");
     if (localData != null) {
       const parseData = JSON.parse(localData);
@@ -32,7 +32,7 @@ export class TodoApp implements OnInit {
   }
 
   onAddTask() {
-    debugger;
+    
     const taskObj = {
       taskName: this.taskName,
       taskStatus: "New"

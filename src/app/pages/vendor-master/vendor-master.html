@@ -1,10 +1,15 @@
-<app-alert-box [alertType]="title" alertMessage="This is Vendor Page"> </app-alert-box>
+@if (isAlertCompVisiable) {
+    <app-alert-box [alertType]="title" alertMessage="This is Vendor Page"> </app-alert-box>
+}
+<button class="btn btn-success" (click)="isAlertCompVisiable = !isAlertCompVisiable">toggle</button>
+
 <div class="row">
     <div class="col-12">
         <app-tabs (onTabChange)="getSelectedTabName($event)" [selectedTabName]="selectedTabName"
             [tabList]="['Vendor List','New Vendor Form']"></app-tabs>
     </div>
 </div>
+- <h1>curretTime => {{curretTime}}</h1>
 
 <div class="row">
     <div class="col-4">

@@ -39,7 +39,7 @@ export class Client implements OnInit {
   ngOnInit(): void {
     this.getAllUser();
    // this.getAllClinetData();
-    debugger;
+    
     const fullName =  this.masterService.generateFullName('Chetan', 'p', 'Jogi');
 
     const apiVerison =  this.masterService.apiVersionName;
@@ -48,10 +48,10 @@ export class Client implements OnInit {
   getAllUser( ){
     this.http.get("https://freeapi.miniprojectideas.com/api/User/GetAllUsers").subscribe({
       next:(res)=>{
-        debugger;
+        
       },
       error:(error)=>{
- debugger;
+ 
       }
     })
   }
@@ -82,10 +82,10 @@ export class Client implements OnInit {
   }
 
   getAllClinetData() {
-    debugger;
+    
     this.masterService.getAllClinet().subscribe({
       next:(result:any)=>{
-debugger;
+
       },
       error:(error)=>{
 
@@ -94,17 +94,17 @@ debugger;
   }
 
   onSaveClientOld() {
-    debugger;
+    
     const formValue = this.newClientForm.value;
     this.http.post("https://api.freeprojectapi.com/api/SmartParking/AddClientsaa", {}).subscribe((res: any) => {
-      debugger;
+      
       if (res.result == true) {
         alert("Client Created Success")
       } else {
         alert(res.message)
       }
     }, error => {
-      debugger;
+      
     })
   }
   // onSaveClient() {
@@ -124,11 +124,11 @@ debugger;
   // }
 
     onSaveClient() {
-      debugger;
+      
     const formValue = this.newClientForm.value;
     this.masterService.onSaveClient(formValue).subscribe({
       next: (result: any) => {
-        debugger;
+        
         if (result.result == true) {
           alert("Client Created Success")
         } else {
@@ -142,13 +142,13 @@ debugger;
   }
 
    onFileChange(event:any) {
-    debugger;
+    
     const file =  event.target.files[0];
     const formData = new FormData();
     formData.append("file",file);
 
     this.http.post("https://storeapi.gerasim.in/api/Customer/Upload",formData).subscribe((Res:any)=>{
-      debugger;
+      
       this.newClientForm.controls['logo'].setValue(Res)
     })
   }

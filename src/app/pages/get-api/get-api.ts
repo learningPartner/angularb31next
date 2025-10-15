@@ -27,9 +27,9 @@ export class GetAPI implements OnInit {
  
 
   getAllDepratments() {
-    debugger;
+    
     this.http.get("https://api.freeprojectapi.com/api/EmployeeApp/GetDepartments").subscribe((result:any)=>{
-       debugger;
+       
       this.deptList = result;
     })
   }

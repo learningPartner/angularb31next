@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Master } from '../../services/master';
 
 @Component({
   selector: 'app-employee',
@@ -27,9 +28,17 @@ export class Employee implements OnInit{
   "salary": 0,
   "profileLogo":""
 }
-
+master = inject(Master);
 ngOnInit(): void {
   this.getAllDept();
+   this.master.$currentTimeSubject.subscribe((time: string)=>{
+      debugger;
+      //this.curretTime =  time;
+    })
+    this.master.$curretDateBehaviourSub.subscribe((res:any)=>{
+      debugger;
+     // this.curretDate =  res;
+    })
 }
 
 onPhoneChnage() {
@@ -55,13 +64,13 @@ onPhoneChnage() {
   }
 
   onFileChange(event:any) {
-    debugger;
+    
     const file =  event.target.files[0];
     const formData = new FormData();
     formData.append("file",file);
 
     this.http.post("https://storeapi.gerasim.in/api/Customer/Upload",formData).subscribe((Res:any)=>{
-      debugger;
+      
       this.empObj.profileLogo = Res;
     })
   }

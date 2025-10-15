@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
+import { Master } from '../../services/master';
 
 @Component({
   selector: 'app-alert-box',
@@ -12,7 +13,18 @@ export class AlertBox {
   @Input() alertMessage = "";
 
   localTextTile: string = "New Text";
+  master= inject(Master);
 
+
+  constructor() {
+    this.master.$currentTimeSubject.subscribe(res=>{
+      debugger;
+    })
+     this.master.$curretDateBehaviourSub.subscribe((res:any)=>{
+      debugger;
+       
+    })
+  }
   getValue() {
     
   }

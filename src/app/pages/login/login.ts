@@ -17,16 +17,16 @@ export class Login {
   router = inject(Router)
 
   onLogin() {
-    debugger;
+    
     this.masterSrv.login(this.loginObj).subscribe({
       next:(res:any)=>{
-         debugger;
+         
          localStorage.setItem('token', res.data.token)
          //localStorage.setItem('loginUser',JSON.stringify(res));
          this.router.navigateByUrl("client");
       },
       error:(error:any)=>{
-         debugger;
+         
          alert(error.error)
       }
     })

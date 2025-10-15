@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { Master } from '../../services/master';
 
 @Component({
   selector: 'app-header',
@@ -11,6 +12,7 @@ export class Header {
 
   loggedData: any;
   router =  inject(Router);
+  masterSrv = inject(Master);
 
   constructor(){
     const localData = localStorage.getItem("loginUser");
@@ -22,6 +24,14 @@ export class Header {
   logoff() {
     localStorage.removeItem('loginUser');
     this.router.navigate(['login'])
+  }
+
+  sendTime() {
+    const curretDate = new Date();
+    const curretTime =  curretDate.toLocaleTimeString();
+    
+    this.masterSrv.$currentTimeSubject.next(curretTime);
+    this.masterSrv.$curretDateBehaviourSub.next(curretDate.toString());
   }
 
 }

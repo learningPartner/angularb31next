@@ -74,7 +74,7 @@ export class AdvReactive {
     // this.userForm.controls['salary'].disable();
     this.onEmplymentChnage(false)
     this.userForm.controls['isEmployeed'].valueChanges.subscribe((res) => {
-      debugger;
+      
       this.onEmplymentChnage(res)
       //    if (res) {
       //   this.userForm.controls['companyName'].enable();
@@ -85,14 +85,14 @@ export class AdvReactive {
       // }
     })
     this.userForm.valueChanges.subscribe(formValue=>{
-      debugger;
+      
     });
 
     this.userForm.statusChanges.subscribe((res)=>{
-      debugger;
+      
     })
     this.userForm.controls['accountType'].valueChanges.subscribe((accType: string)=>{
-      debugger;
+      
       if(accType == 'business') {
         this.userForm.controls['gstNo'].setValidators([Validators.required])
         this.userForm.controls['gstNo'].updateValueAndValidity();
@@ -112,7 +112,7 @@ export class AdvReactive {
 
   onEmplymentChnage(isChecked: any) {
     console.log("onEmplymentChnage");
-    debugger;
+    
     const disbaleControList = ['companyName','salary'];
     if (isChecked) {
       disbaleControList.forEach(element => {

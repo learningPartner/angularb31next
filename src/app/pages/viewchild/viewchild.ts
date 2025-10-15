@@ -25,7 +25,7 @@ export class Viewchild implements OnInit, AfterViewInit {
   readText() {
     //const etxt =  document.getElementById("textRollNo")?.value;
     const textValue = this.textRollInput.nativeElement.value;
-    debugger;
+    
   }
   setRollText() {
     //document.getElementById("textRollNo")?.value= 222
@@ -33,6 +33,6 @@ export class Viewchild implements OnInit, AfterViewInit {
   }
   ReadAlertData() {
     const text = this.alertCompInstance.localTextTile;
-    debugger;
+    
   }
 }

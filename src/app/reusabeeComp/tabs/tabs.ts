@@ -16,7 +16,7 @@ export class Tabs {
   @Input() selectedTabName: string = '';
 
   onSelectTab(tabName: string) {
-    debugger;
+    
     this.selectedTabName =  tabName;
     this.onTabChange.emit(this.selectedTabName);
   }
