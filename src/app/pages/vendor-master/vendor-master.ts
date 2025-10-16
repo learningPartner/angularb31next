@@ -1,6 +1,6 @@
-import { JsonPipe } from '@angular/common';
+import { AsyncPipe, JsonPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Master } from '../../services/master';
 import { INewVendor, NewVendor } from '../../model/vendor';
@@ -12,14 +12,15 @@ import { NullBlankPipe } from '../../pipe/null-blank-pipe';
 import { Highlight } from '../../directives/highlight';
 import { CheckEmpty } from '../../directives/check-empty';
 import { DisbaleForGuest } from '../../directives/disbale-for-guest';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-vendor-master',
-  imports: [FormsModule, JsonPipe, AlertBox, Tabs, ShowMoreShowLess,DisbaleForGuest, MyButton,NullBlankPipe,Highlight,CheckEmpty],
+  imports: [FormsModule, JsonPipe,AsyncPipe, AlertBox, Tabs, ShowMoreShowLess, DisbaleForGuest, MyButton, NullBlankPipe, Highlight, CheckEmpty],
   templateUrl: './vendor-master.html',
   styleUrl: './vendor-master.css'
 })
-export class VendorMaster implements OnInit {
+export class VendorMaster implements OnInit, OnDestroy {
 
   // newVendorObj: any = {
   //   "vendorId": 0,
@@ -29,17 +30,16 @@ export class VendorMaster implements OnInit {
   // };
   title = "Warning"
 
-  newVendorObj : NewVendor = new NewVendor();
+  newVendorObj: NewVendor = new NewVendor();
 
   vendorObj!: INewVendor;
 
   studentObj: any = {
-    name:'ABC',
-     
-    skills: ['Angular','Css','Html']
-  }
+    name: 'ABC',
 
-  vendorList: NewVendor[] = [];
+    skills: ['Angular', 'Css', 'Html']
+  }
+ 
   http = inject(HttpClient);
   masterService = inject(Master);
   //vendorName: never = '';
@@ -47,68 +47,83 @@ export class VendorMaster implements OnInit {
   curretTime: string = '';
   curretDate: string = '';
 
+  subscriptionList: Subscription[] = [];
+
   isAlertCompVisiable: boolean = false;
+
+  allClinet$: Observable<any>;
+  time$ : Observable<string>;
+  constructor() {
+    this.allClinet$ =  this.http.get("https://api.freeprojectapi.com/api/BusBooking/GetBusVendors");
+    this.time$ = this.masterService.$currentTimeSubject;
+  }
+
   ngOnInit(): void {
-    this.getAllvendors();
-    this.getAllClient()
-    this.masterService.$currentTimeSubject.subscribe((time: string)=>{
+    //this.getAllvendors();
+   // this.getAllClient()
+    // this.subscriptionList.push(
+    //   this.masterService.$currentTimeSubject.subscribe((time: string) => {
+    //     debugger;
+    //     this.curretTime = time;
+    //   })
+    // )
+    const beh$ = this.masterService.$curretDateBehaviourSub.subscribe((res: any) => {
       debugger;
-      this.curretTime =  time;
+      this.curretDate = res;
     })
-    this.masterService.$curretDateBehaviourSub.subscribe((res:any)=>{
-      debugger;
-      this.curretDate =  res;
-    })
+    this.subscriptionList.push(beh$)
+    debugger;
   }
 
   getSelectedTabName(tabNAme: string) {
-    
-    this.selectedTabName =  tabNAme;
+
+    this.selectedTabName = tabNAme;
   }
 
   getAllClient() {
-     
-    this.masterService.getAllClinet().subscribe({
-      next:(res:any)=> {
-        
+
+   const cline$ =  this.masterService.getAllClinet().subscribe({
+      next: (res: any) => {
+
       }
     })
+    this.subscriptionList.push(cline$)
   }
 
   counter = 0;
   checkForNullorEmpty(value: any) {
     this.counter++;
     console.log("checkForNullorEmpty")
-    console.log( this.counter)
-    if(value == '' || value == null || value == undefined ) {
-      return  "--";
+    console.log(this.counter)
+    if (value == '' || value == null || value == undefined) {
+      return "--";
     } else {
       return value;
-    } 
+    }
   }
 
   chnageName(form: NgForm) {
-    
+
     form.form.controls['vendorName'].setValue("demo")
   }
 
-  getAllvendors() {
-    this.http.get("https://api.freeprojectapi.com/api/BusBooking/GetBusVendors").subscribe((Res: any) => {
-      
-       this.vendorList = Res;
-      //this.vendorList = Res.filter((m:any) => m.vendorName !== 'string' && m.contactNo != "string" && m.emailId !="string");
-    })
-  }
+  // getAllvendors() {
+  //  const bus$= this.http.get("https://api.freeprojectapi.com/api/BusBooking/GetBusVendors").subscribe((Res: any) => {
+  //     this.vendorList = Res;
+  //     //this.vendorList = Res.filter((m:any) => m.vendorName !== 'string' && m.contactNo != "string" && m.emailId !="string");
+  //   })
+  //   this.subscriptionList.push(bus$)
+  // }
 
   onSaveVendor() {
-    
+
     // this.masterService.saveVendor(this.newVendorObj).subscribe((res:any)=>{
 
     // });
     this.http.post("https://api.freeprojectapi.com/api/BusBooking/PostBusVendor", this.newVendorObj).subscribe((res: any) => {
-      
+
       alert("Vendor Created Success");
-      this.getAllvendors();
+      //this.getAllvendors();
     })
   }
 
@@ -120,17 +135,17 @@ export class VendorMaster implements OnInit {
   onUpdateVendor() {
     this.http.put("https://api.freeprojectapi.com/api/BusBooking/PutBusVendors?id=" + this.newVendorObj.vendorId, this.newVendorObj).subscribe((res: any) => {
       alert("Vendor Updated");
-      this.getAllvendors();
+      //this.getAllvendors();
     })
   }
 
   onDeleteVendor(id: number) {
     const isDelete = confirm("Are you sure want to Delete");
-    
+
     if (isDelete) {
       this.http.delete("https://api.freeprojectapi.com/api/BusBooking/DeleteBusVendor?id=" + id).subscribe((res: any) => {
         alert("Vendor Deleted");
-        this.getAllvendors();
+        //this.getAllvendors();
       })
     }
   }
@@ -142,5 +157,12 @@ export class VendorMaster implements OnInit {
       "contactNo": "",
       "emailId": ""
     };
+  }
+
+  ngOnDestroy(): void {
+    debugger;
+    this.subscriptionList.forEach(sub => {
+      sub.unsubscribe()
+    })
   }
 }
