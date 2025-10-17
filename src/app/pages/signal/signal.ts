@@ -1,5 +1,5 @@
 import { JsonPipe } from '@angular/common';
-import { Component, input, signal, WritableSignal } from '@angular/core';
+import { Component, computed, effect, input, OnInit, signal, WritableSignal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './signal.html',
   styleUrl: './signal.css'
 })
-export class Signal {
+export class Signal implements OnInit {
 
   productName: string = "Moto Mobile";
   isPresent =  true;
@@ -23,12 +23,46 @@ export class Signal {
   cityList =  signal<string[]>(['Pune','Nagpur','Mumbai','Pune'])
   cityName = "";
 
-  studentFormObj = signal<any>({name:'', city:'',state:''})
+  studentFormObj = signal<any>({name:'', city:'',state:''});
 
+  firstName = signal<string>("");
+  middleName = signal<string>("");
+  lastName =  signal<string>("");
+
+  fullName = computed(()=> this.firstName() + " "+  this.middleName() +" "+  this.lastName())
+
+  fullNameNormalSignal = signal<string>("");
   constructor(){
     console.log(this.productName);
+    effect(()=>{
+      debugger;
+      this.fullNameNormalSignal.set(this.firstName() + " "+  this.middleName() +" "+  this.lastName())
+      //console.log(this.middleName())
+      console.log("effect execuited")
+    })
+    effect(()=>{
+      debugger;
+      console.log(this.lastName())
+    })
     console.log("************")
     console.log(this.productPrice())
+  }
+
+  ngOnInit(): void {
+   
+  }
+  changeFirstName() {
+    this.firstName.set("Rahul")
+  }
+
+  changeFName() {
+    this.firstName.set("Chetan")
+  }
+  changeMName() {
+   this.middleName.set("P")
+  }
+  changeLName() {
+   this.lastName.set("Jogi")
   }
 
   chnageNAme() {

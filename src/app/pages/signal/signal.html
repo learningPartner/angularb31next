@@ -48,3 +48,21 @@
         <button class="btn btn-primary" (click)="chnageWholeObj()">Add new TSudent</button>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-3">
+        <button (click)="changeFName()">chnage F Name</button> - {{firstName()}}
+    </div> 
+     <div class="col-3">
+         <button (click)="changeMName()">chnage M Name</button>- {{middleName()}}
+    </div>
+     <div class="col-3">
+         <button (click)="changeLName()">chnage L Name</button>- {{lastName()}}
+    </div>
+    <div class="col-3">
+      fullName=>   {{fullName()}} <br>
+      fullNameNormalSignal=> {{fullNameNormalSignal()}}
+    </div>
+</div>
+
+        <button (click)="changeFirstName()">chnage F Name</button>
