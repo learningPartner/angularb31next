@@ -62,7 +62,11 @@
                                 </select>
                             </div>
                             <div class="col-md-6"> <label class="form-label">Date of Joining</label>
-                                <input type="date" [(ngModel)]="empObj.dateOfJoining" class="form-control">
+                                <p-datepicker [minDate]="minDate" [(ngModel)]="empObj.dateOfJoining" />
+                                <!-- <input type="date" [(ngModel)]="empObj.dateOfJoining" class="form-control"> -->
+                            </div>
+                            <div class="div">
+                                {{minDate}}
                             </div>
                             <div class="col-md-6"> <label class="form-label">Employee Type</label>
                                 <input type="text" [(ngModel)]="empObj.employeeType" class="form-control"
@@ -78,12 +82,13 @@
                                 </select>
                             </div>
                             <div class="col-md-6"> <label class="form-label">Designation</label>
-                                <select [(ngModel)]="empObj.designationId" class="form-select">
-                                    <option selected disabled>Select designation</option>
+                                <p-select [options]="designationList" [(ngModel)]="empObj.designationId" optionLabel="designationName" [filter]="true" filterBy="designationName" optionValue="designationId" placeholder="Select designation" class="w-full md:w-56" />
+                                <!-- <select [(ngModel)]="empObj.designationId" class="form-select">
+                                    <option selected disabled>Select designation</option> 
                                     @for (item of designationList; track $index) {
                                         <option [value]="item.designationId"> {{item.designationName}}</option>
                                     }
-                                </select>
+                                </select> -->
                             </div>
                              <div class="col-md-6"> <label class="form-label">Upload Photo</label>
                                 <input type="file" (change)="onFileChange($event)" [(ngModel)]="empObj.profileLogo" class="form-control"

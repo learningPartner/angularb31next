@@ -10,6 +10,7 @@ import { Signal } from './pages/signal/signal';
 import { Viewchild } from './pages/viewchild/viewchild';
 import { AdvReactive } from './pages/adv-reactive/adv-reactive';
 import { Rxjs } from './pages/rxjs/rxjs';
+import { GetAPI } from './pages/get-api/get-api';
 
 export const routes: Routes = [
 
@@ -30,6 +31,10 @@ export const routes: Routes = [
             {
                 path: 'vendor',
                 component: VendorMaster
+            },
+             {
+                path: 'get-api',
+                component: GetAPI
             },
              {
                 path: 'adv-rec',

@@ -2,10 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Master } from '../../services/master';
+import { DatePickerModule } from 'primeng/datepicker';
+import { SelectModule } from 'primeng/select';
 
 @Component({
   selector: 'app-employee',
-  imports: [FormsModule],
+  imports: [FormsModule, DatePickerModule,SelectModule],
   templateUrl: './employee.html',
   styleUrl: './employee.css'
 })
@@ -28,7 +30,13 @@ export class Employee implements OnInit{
   "salary": 0,
   "profileLogo":""
 }
+minDate: Date | undefined;
 master = inject(Master);
+constructor() {
+     
+        this.minDate = new Date();
+        
+}
 ngOnInit(): void {
   this.getAllDept();
    this.master.$currentTimeSubject.subscribe((time: string)=>{

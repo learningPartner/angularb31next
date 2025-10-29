@@ -1,4 +1,4 @@
-<button (click)="getAllDepratments()">Get Dept</button>
+<!-- <button (click)="getAllDepratments()">Get Dept</button>
 
 <select [(ngModel)]="selectedDeptId" (change)="getDesignationByDeptId()">
     @for (item of deptList; track $index) {
@@ -11,8 +11,19 @@
     <option value="">{{item.designationName}}</option>
     }
 </select>
-<br>
-<table>
+<br> -->
+<ag-grid-angular  
+  class="ag-theme-quartz"
+  style="width: 100%; height: 500px;"
+  [rowData]="empList"
+  [columnDefs]="colDefs"
+   [rowSelection]="'multiple'"
+   [pagination]="true"
+  [paginationPageSize]="paginationPageSize"
+  [paginationPageSizeSelector]="paginationPageSizeSelector"
+  [defaultColDef]="defaultColDef">
+</ag-grid-angular>
+<!-- <table>
     <thead>
         <tr>
             <th>Sr No</th>
@@ -34,4 +45,4 @@
         }
 
     </tbody>
-</table>
+</table> -->

@@ -13,10 +13,13 @@ import { Highlight } from '../../directives/highlight';
 import { CheckEmpty } from '../../directives/check-empty';
 import { DisbaleForGuest } from '../../directives/disbale-for-guest';
 import { Observable, Subscription } from 'rxjs';
-
+import { TableModule } from 'primeng/table';
+import { InputTextModule } from 'primeng/inputtext';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 @Component({
   selector: 'app-vendor-master',
-  imports: [FormsModule, JsonPipe,AsyncPipe, AlertBox, Tabs, ShowMoreShowLess, DisbaleForGuest, MyButton, NullBlankPipe, Highlight, CheckEmpty],
+  imports: [FormsModule, JsonPipe,IconFieldModule,InputIconModule, InputTextModule,AsyncPipe,TableModule, AlertBox, Tabs, ShowMoreShowLess, DisbaleForGuest, MyButton, NullBlankPipe, Highlight, CheckEmpty],
   templateUrl: './vendor-master.html',
   styleUrl: './vendor-master.css'
 })

@@ -1,5 +1,5 @@
 @if (isAlertCompVisiable) {
-    <app-alert-box [alertType]="title" alertMessage="This is Vendor Page"> </app-alert-box>
+<app-alert-box [alertType]="title" alertMessage="This is Vendor Page"> </app-alert-box>
 }
 <button class="btn btn-success" (click)="isAlertCompVisiable = !isAlertCompVisiable">toggle</button>
 
@@ -33,21 +33,57 @@
         }
     </div>
 </div> -->
-<input type="text" appHighlight [color]="'red'" [(ngModel)]="title"/>
+<input type="text" appHighlight [color]="'red'" [(ngModel)]="title" />
 <div class="row">
     @if(selectedTabName == 'Vendor List') {
     <div class="col-12">
         <div class="card">
             <div class="card-header bg-warning">
-                Vendor List - 
+                Vendor List -
             </div>
             <div class="card-body">
 
                 city=> {{studentObj.city}} -email=> {{studentObj?.contact?.email}};
 
                 <br>
+                <p-table #dt2 [value]="allClinet$|async" [paginator]="true" [rows]="5"
+                    [tableStyle]="{ 'min-width': '50rem' }" [rowsPerPageOptions]="[5, 10, 20,50]"
+                    [globalFilterFields]="['vendorName', 'contactNo', 'emailId']">
 
-                <table class="table table-bordered">
+                    <ng-template #caption>
+                        <div class="flex">
+                            <p-iconfield iconPosition="left" class="ml-auto">
+                                <p-inputicon>
+                                    <i class="pi pi-search"></i>
+                                </p-inputicon>
+                                <input pInputText type="text"
+                                    (input)="dt2.filterGlobal($event.target.value, 'contains')"
+                                    placeholder="Search keyword" />
+                            </p-iconfield>
+                        </div>
+                    </ng-template>
+                    <ng-template #header>
+                        <tr>
+                            <th pSortableColumn="vendorName" style="width:20%">
+                                <div class="flex items-center gap-2">
+                                    Name
+                                    <p-sortIcon field="vendorName" />
+                                </div>
+                            </th>
+                            <th>Conatct</th>
+                            <th>Email</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template #body let-product>
+                        <tr>
+                            <td>{{ product.vendorName }}</td>
+                            <td>{{ product.contactNo }}</td>
+                            <td>{{ product.emailId }}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+
+                <!-- <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th appHighlight [color]="'green'">Sr No</th>
@@ -63,24 +99,11 @@
                             <td> {{$index+1}}</td>
                             <td appHighlight [color]="'red'">
 
-                                <!-- {{item.fname}} {{item.mnam}} {{item.lname}}
-                                {{item | fullName}} -->
-                                <!-- @if(item.vendorName == '' || item.vendorName == null || item.vendorName == undefined) {
-                                --
-                                } @else {
-                                {{item.vendorName}}
-                                } -->
-
-                                <!-- {{checkForNullorEmpty(item.vendorName)}} -->
+                               
                                  {{item.vendorName | nullBlank:'--'}}
                             </td>
                             <td appHighlight [color]="'yellow'">
-                                <!-- @if(item.contactNo == '' || item.contactNo == null || item.contactNo == undefined) {
-                                --
-                                } @else {
-                                {{item.contactNo}}
-                                } -->
-                                  <!-- {{checkForNullorEmpty(item.contactNo)}} -->
+                                
                                    {{item.contactNo |nullBlank:'NO Present'}}
                             </td>
                             <td >
@@ -97,7 +120,7 @@
                         </tr>
                         }
                     </tbody>
-                </table>
+                </table> -->
             </div>
         </div>
     </div>
@@ -133,8 +156,9 @@
                         </div>
                         <div class="col-6">
                             <label for="">Contact No</label>
-                            <input appDisbaleForGuest type="text" #mobile="ngModel" name="contactNo" [(ngModel)]="newVendorObj.contactNo"
-                                pattern="^\d+$" required minlength="10" maxlength="10" class="form-control">
+                            <input appDisbaleForGuest type="text" #mobile="ngModel" name="contactNo"
+                                [(ngModel)]="newVendorObj.contactNo" pattern="^\d+$" required minlength="10"
+                                maxlength="10" class="form-control">
                             <div class="text-danger">
                                 @if(mobile.touched) {
                                 @if (mobile.errors?.['required']) {
@@ -152,8 +176,9 @@
                         </div>
                         <div class="col-6">
                             <label for="">Email-Id</label>
-                            <input appDisbaleForGuest type="text" #email="ngModel" name="emailId" [(ngModel)]="newVendorObj.emailId"
-                                required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control">
+                            <input appDisbaleForGuest type="text" #email="ngModel" name="emailId"
+                                [(ngModel)]="newVendorObj.emailId" required
+                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control">
                             <div class="text-danger">
                                 @if(email.errors?.['required']) {
                                 <span>This is required</span>
