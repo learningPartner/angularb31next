@@ -11,6 +11,7 @@ import { Viewchild } from './pages/viewchild/viewchild';
 import { AdvReactive } from './pages/adv-reactive/adv-reactive';
 import { Rxjs } from './pages/rxjs/rxjs';
 import { GetAPI } from './pages/get-api/get-api';
+import { NgTemContaoner } from './pages/ng-tem-contaoner/ng-tem-contaoner';
 
 export const routes: Routes = [
 
@@ -43,6 +44,10 @@ export const routes: Routes = [
             {
                 path: 'client',
                 component: Client
+            },
+             {
+                path: 'template-container',
+                component: NgTemContaoner
             },
             {
                 path: 'todo',
