@@ -12,6 +12,7 @@ import { AdvReactive } from './pages/adv-reactive/adv-reactive';
 import { Rxjs } from './pages/rxjs/rxjs';
 import { GetAPI } from './pages/get-api/get-api';
 import { NgTemContaoner } from './pages/ng-tem-contaoner/ng-tem-contaoner';
+import { UserFamily } from './pages/user-family/user-family';
 
 export const routes: Routes = [
 
@@ -52,6 +53,10 @@ export const routes: Routes = [
             {
                 path: 'todo',
                 component: TodoApp
+            },
+            {
+                path: 'user-family',
+                component: UserFamily
             },
             {
                 path: 'rxjs',
