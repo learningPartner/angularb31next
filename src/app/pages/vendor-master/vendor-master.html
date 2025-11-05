@@ -1,5 +1,5 @@
-@if (isAlertCompVisiable) {
-<app-alert-box [alertType]="title" alertMessage="This is Vendor Page"> </app-alert-box>
+<!-- @if (isAlertCompVisiable) {
+
 }
 <button class="btn btn-success" (click)="isAlertCompVisiable = !isAlertCompVisiable">toggle</button>
 
@@ -9,14 +9,14 @@
             [tabList]="['Vendor List','New Vendor Form']"></app-tabs>
     </div>
 </div>
-- <h1>curretTime => {{time$ |async}}</h1>
+- <h1>curretTime => {{time$ |async}}</h1> -->
 
-<div class="row">
+<!-- <div class="row">
     <div class="col-4">
         <app-show-more-show-less
             [textMessage]="'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et dictum interdum, nisi lorem egestas vitae scelerisque enim ligula venenatis dolor. Maecenas nisl est, ultrices nec congue eget, auctor vitae massa. Fusce luctus vestibulum augue ut aliquet. Nunc sagittis dictum nisi, sed ullamcorper ipsum dignissim ac. In at libero sed nunc venenatis imperdiet sed ornare turpis. Donec vitae dui eget tellus gravida venenatis. Integer fringilla congue eros non fermentum. Sed dapibus pulvinar nibh tempor porta.'"></app-show-more-show-less>
     </div>
-</div>
+</div> -->
 <!-- <div class="row">
     <div class="col-12">
         @if (selectedTabName == 'Basic Info') {
@@ -33,10 +33,17 @@
         }
     </div>
 </div> -->
-<input type="text" appHighlight [color]="'red'" [(ngModel)]="title" />
+<!-- <input type="text" appHighlight [color]="'red'" [(ngModel)]="title" /> -->
+@if (alertData().alertType != '') {
+    <app-alert-box [alertType]="alertData().alertType" 
+[alertMessage]="alertData().alertMessage"> 
+</app-alert-box>
+}
+
+
 <div class="row">
-    @if(selectedTabName == 'Vendor List') {
-    <div class="col-12">
+    <!-- @if(selectedTabName == 'Vendor List') { -->
+    <div class="col-7">
         <div class="card">
             <div class="card-header bg-warning">
                 Vendor List -
@@ -46,7 +53,7 @@
                 city=> {{studentObj.city}} -email=> {{studentObj?.contact?.email}};
 
                 <br>
-                <p-table #dt2 [value]="allClinet$|async" [paginator]="true" [rows]="5"
+                <!-- <p-table #dt2 [value]="allClinet$|async" [paginator]="true" [rows]="5"
                     [tableStyle]="{ 'min-width': '50rem' }" [rowsPerPageOptions]="[5, 10, 20,50]"
                     [globalFilterFields]="['vendorName', 'contactNo', 'emailId']">
 
@@ -81,9 +88,9 @@
                             <td>{{ product.emailId }}</td>
                         </tr>
                     </ng-template>
-                </p-table>
+                </p-table> -->
 
-                <!-- <table class="table table-bordered">
+                <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th appHighlight [color]="'green'">Sr No</th>
@@ -94,38 +101,57 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @for (item of allClinet$|async; track $index) {
+                        @if (isSaveApiInProgress()== true) {
+                        <ng-container>
+                            <tr>
+                                <td colspan="5">
+                                    <div class="spinner-grow text-muted"></div>
+                                    <div class="spinner-grow text-primary"></div>
+                                    <div class="spinner-grow text-success"></div>
+                                    <div class="spinner-grow text-info"></div>
+                                    <div class="spinner-grow text-warning"></div>
+                                    <div class="spinner-grow text-danger"></div>
+                                    <div class="spinner-grow text-secondary"></div>
+                                    <div class="spinner-grow text-dark"></div>
+                                    <div class="spinner-grow text-light"></div>
+                                </td>
+                            </tr>
+                        </ng-container>
+                        } @else {
+                        @for (item of vendorList; track $index) {
                         <tr>
                             <td> {{$index+1}}</td>
                             <td appHighlight [color]="'red'">
-
-                               
-                                 {{item.vendorName | nullBlank:'--'}}
+                    
+                    
+                                {{item.vendorName | nullBlank:'--'}}
                             </td>
                             <td appHighlight [color]="'yellow'">
-                                
-                                   {{item.contactNo |nullBlank:'NO Present'}}
+                    
+                                {{item.contactNo |nullBlank:'NO Present'}}
                             </td>
-                            <td >
+                            <td>
                                 <span appCheckEmpty [valueText]="item.emailId">
-                                    
+                    
                                 </span>
-                                 
-                                 </td>
+                    
+                            </td>
                             <td>
                                 <button class="btn btn-success" (click)="onEdit(item)">Edit</button>
-                                <button class="btn btn-danger mx-2"
-                                    (click)="onDeleteVendor(item.vendorId)">Delete</button>
+                                <button class="btn btn-danger mx-2" (click)="onDeleteVendor(item.vendorId)">Delete</button>
                             </td>
                         </tr>
                         }
+                        }
+                    
+                    
                     </tbody>
-                </table> -->
+                </table>
             </div>
         </div>
     </div>
-    } @else {
-    <div class="col-12">
+      
+    <div class="col-5">
         <div class="card">
             <div class="card-header bg-warning">
                 New Vendor
@@ -136,7 +162,7 @@
                         <div class="col-6">
 
                             <label for="">Vendor Name</label>
-                            <input appDisbaleForGuest type="text" #vendorName="ngModel" name="vendorName"
+                            <input   type="text" #vendorName="ngModel" name="vendorName"
                                 [(ngModel)]="newVendorObj.vendorName" required minlength="4" class="form-control">
                             <div class="text-danger">
                                 <!-- {{vName.errors | json}} -->
@@ -156,7 +182,7 @@
                         </div>
                         <div class="col-6">
                             <label for="">Contact No</label>
-                            <input appDisbaleForGuest type="text" #mobile="ngModel" name="contactNo"
+                            <input   type="text" #mobile="ngModel" name="contactNo"
                                 [(ngModel)]="newVendorObj.contactNo" pattern="^\d+$" required minlength="10"
                                 maxlength="10" class="form-control">
                             <div class="text-danger">
@@ -176,7 +202,7 @@
                         </div>
                         <div class="col-6">
                             <label for="">Email-Id</label>
-                            <input appDisbaleForGuest type="text" #email="ngModel" name="emailId"
+                            <input   type="text" #email="ngModel" name="emailId"
                                 [(ngModel)]="newVendorObj.emailId" required
                                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control">
                             <div class="text-danger">
@@ -195,10 +221,14 @@
                         </div>
                         <div class="col-6 text-center">
                             @if(newVendorObj.vendorId == 0) {
-                            <app-my-button [btnTitle]="'Save Vendor'" (onBtnClick)="onSaveVendor()" [btnType]="'button'"
-                                [btnClass]="'btn btn-secondary'"></app-my-button>
-                            <!-- <button class="btn btn-primary" (click)="onSaveVendor()" [disabled]="formValue.invalid">Save
-                                vendor</button> -->
+                            <!-- <app-my-button [btnTitle]="'Save Vendor'" (onBtnClick)="onSaveVendor()" [btnType]="'button'"
+                                [btnClass]="'btn btn-secondary'"></app-my-button> -->
+                            <button class="btn btn-primary" (click)="onSaveVendor()" [disabled]="formValue.invalid || isSaveApiInProgress()">
+                                @if(isSaveApiInProgress()) {
+                                     <span class="spinner-border spinner-border-sm"></span>
+                                }
+                               
+                                Save  vendor</button>
                             } @else {
                             <app-my-button [btnTitle]="'Update Vendor'" [btnType]="'button'"
                                 [btnClass]="'btn btn-warning'" (onBtnClick)="onUpdateVendor()"> </app-my-button>
@@ -213,7 +243,7 @@
             </div>
         </div>
     </div>
-    }
+    
 
 
 </div>

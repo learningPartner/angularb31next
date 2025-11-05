@@ -1,6 +1,6 @@
 import { AsyncPipe, JsonPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Master } from '../../services/master';
 import { INewVendor, NewVendor } from '../../model/vendor';
@@ -56,13 +56,17 @@ export class VendorMaster implements OnInit, OnDestroy {
 
   allClinet$: Observable<any>;
   time$ : Observable<string>;
+  vendorList:any[]=[]
+  isSaveApiInProgress = signal<boolean>(false);
+  alertData = signal<any>({alertType:'',alertMessage:''})
+
   constructor() {
     this.allClinet$ =  this.http.get("https://api.freeprojectapi.com/api/BusBooking/GetBusVendors");
     this.time$ = this.masterService.$currentTimeSubject;
   }
 
   ngOnInit(): void {
-    //this.getAllvendors();
+    this.getAllvendors();
    // this.getAllClient()
     // this.subscriptionList.push(
     //   this.masterService.$currentTimeSubject.subscribe((time: string) => {
@@ -110,23 +114,34 @@ export class VendorMaster implements OnInit, OnDestroy {
     form.form.controls['vendorName'].setValue("demo")
   }
 
-  // getAllvendors() {
-  //  const bus$= this.http.get("https://api.freeprojectapi.com/api/BusBooking/GetBusVendors").subscribe((Res: any) => {
-  //     this.vendorList = Res;
-  //     //this.vendorList = Res.filter((m:any) => m.vendorName !== 'string' && m.contactNo != "string" && m.emailId !="string");
-  //   })
-  //   this.subscriptionList.push(bus$)
-  // }
+  getAllvendors() {
+     this.isSaveApiInProgress.set(true);
+   const bus$= this.http.get("https://api.freeprojectapi.com/api/BusBooking/GetBusVendors").subscribe((Res: any) => {
+      this.vendorList = Res;
+       this.isSaveApiInProgress.set(false);
+      //this.vendorList = Res.filter((m:any) => m.vendorName !== 'string' && m.contactNo != "string" && m.emailId !="string");
+    })
+    this.subscriptionList.push(bus$)
+  }
 
   onSaveVendor() {
 
     // this.masterService.saveVendor(this.newVendorObj).subscribe((res:any)=>{
 
     // });
+    this.isSaveApiInProgress.set(true);
     this.http.post("https://api.freeprojectapi.com/api/BusBooking/PostBusVendor", this.newVendorObj).subscribe((res: any) => {
 
-      alert("Vendor Created Success");
-      //this.getAllvendors();
+      // alert("Vendor Created Success");
+      this.vendorList.push(res)
+      this.isSaveApiInProgress.set(false)
+      this.alertData.set({alertType:'Success',alertMessage:'Vendor Created Success'})
+     // this.getAllvendors();
+     setTimeout(() => { 
+       this.alertData.set({alertType:'',alertMessage:''})
+     }, 3000);
+    },error=>{
+        this.alertData.set({alertType:'Error',alertMessage:'API Failed'})
     })
   }
 
@@ -138,7 +153,7 @@ export class VendorMaster implements OnInit, OnDestroy {
   onUpdateVendor() {
     this.http.put("https://api.freeprojectapi.com/api/BusBooking/PutBusVendors?id=" + this.newVendorObj.vendorId, this.newVendorObj).subscribe((res: any) => {
       alert("Vendor Updated");
-      //this.getAllvendors();
+     this.getAllvendors();
     })
   }
 
@@ -148,7 +163,7 @@ export class VendorMaster implements OnInit, OnDestroy {
     if (isDelete) {
       this.http.delete("https://api.freeprojectapi.com/api/BusBooking/DeleteBusVendor?id=" + id).subscribe((res: any) => {
         alert("Vendor Deleted");
-        //this.getAllvendors();
+        this.getAllvendors();
       })
     }
   }
