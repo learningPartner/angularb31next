@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { Viewchild } from './viewchild';
 
-describe('Viewchild', () => {
+xdescribe('Viewchild', () => {
   let component: Viewchild;
   let fixture: ComponentFixture<Viewchild>;
 

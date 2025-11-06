@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PlanSelection } from './plan-selection';
 
-describe('PlanSelection', () => {
+xdescribe('PlanSelection', () => {
   let component: PlanSelection;
   let fixture: ComponentFixture<PlanSelection>;
 

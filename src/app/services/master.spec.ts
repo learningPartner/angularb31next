@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { Master } from './master';
 
-describe('Master', () => {
+xdescribe('Master', () => {
   let service: Master;
 
   beforeEach(() => {

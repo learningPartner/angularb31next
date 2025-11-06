@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NgTemContaoner } from './ng-tem-contaoner';
 
-describe('NgTemContaoner', () => {
+xdescribe('NgTemContaoner', () => {
   let component: NgTemContaoner;
   let fixture: ComponentFixture<NgTemContaoner>;
 

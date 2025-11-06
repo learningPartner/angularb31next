@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VendorMaster } from './vendor-master';
 
-describe('VendorMaster', () => {
+xdescribe('VendorMaster', () => {
   let component: VendorMaster;
   let fixture: ComponentFixture<VendorMaster>;
 

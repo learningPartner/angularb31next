@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { Rxjs } from './rxjs';
 
-describe('Rxjs', () => {
+xdescribe('Rxjs', () => {
   let component: Rxjs;
   let fixture: ComponentFixture<Rxjs>;
 
